@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Want Support? Come here!</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f9f9f9;
+            margin: 20px;
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            text-align: center;
+            color: #333;
+            font-family: 'Lato', sans-serif
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            color: #555;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 20px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .qualify {
+            background-color: #4caf51;
+            transform: scale (1.05);
+        }
+
+        .not-qualify {
+            background-color: #ffcccc;
+            transform: scale(1);
+        }
+
+        button {
+            padding: 12px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: block;
+            margin: auto;
+            font-size: 18px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .scheme-link {
+            text-decoration: none;
+            color: #000000;
+            font-weight: bold;
+        }
+
+        h3 {
+            color: #555;
+        }
+
+        p {
+            color: #777;
+        }
+
+        @media only screen and (max-width: 600px) {
+            body {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Want Support? Come here!</h1>
+    <h2>Find out what financial assistance schemes you are eligible for!</h2>
+    <h3>This is a rough guide. For more information on the schemes, please do visit the respective websites.</h3>
+
+    <label for="age">Enter your age:</label>
+    <input type="number" id="age" placeholder="Enter your age" />
+
+    <label for="income">Enter your monthly income:</label>
+    <input type="number" id="income" placeholder="Enter your income" />
+
+    <label for="propertyValue">Enter your annual property value:</label>
+    <input type="number" id="propertyValue" placeholder="Enter your annual property value" />
+
+    <label for="nationality">Select your nationality status:</label>
+    <select id="nationality">
+        <option value="Singaporean">Singaporean</option>
+        <option value="PR">PR</option>
+        <option value="Foreigner">Foreigner</option>
+    </select>
+
+    <label for="category">Select category:</label>
+    <select id="category" onchange="filterByCategory()">
+        <option value="all">All</option>
+        <option value="employment">Employment</option>
+        <option value="health">Health</option>
+        <option value="transport">Transport</option>
+        <option value="education">Education</option>
+    </select>
+    
+
+    <label for="disabilities">Persons with Disabilities?</label>
+    <select id="disabilities">
+        <option value="No">No</option>
+        <option value="Yes">Yes</option>
+    </select>
+
+    <h3>Definition of Disability:</h3>
+    <p>Disability refers to those with substantially reduced prospects of securing, retaining places and advancing in education and training institutions, employment, and recreation, due to physical, intellectual, and sensory impairments, as well as developmental needs including Autism Spectrum Disorder.</p>
+
+
+    
+
+    <button onclick="checkQualification()">Check Qualification</button>
+
+    <h2>Support Schemes:</h2>
+    <ul id="support-schemes">
+        
+        <li id="covid19Grant" data-category="employment">
+            COVID-19 Recovery Grant: <a href="https://supportgowhere.life.gov.sg/schemes/CRG/covid-19-recovery-grant" class="scheme-link">Grant Website</a>
+        </li>
+
+        <li id="caregiversTrainingGrant" data-category="health">
+            Caregivers Training Grant: <a href="https://supportgowhere.life.gov.sg/schemes/CAREGIVERS_TRAINING/caregivers-training-grant" class="scheme-link">Grant Website</a>
+        </li>
+
+        <li id="CHAS" data-category="health">
+            Community Health Assistance Scheme: <a href="https://supportgowhere.life.gov.sg/schemes/CHAS/community-health-assist-scheme-chas" class="scheme-link">Grant Website</a>
+        </li>
+
+        <li id="EAS" data-category="health">
+            Enhancement for Active Seniors: <a href="https://supportgowhere.life.gov.sg/schemes/EASE/enhancement-active-seniors-ease" class="scheme-link">Grant Website</a>
+        </li>
+
+        <li id="HCG" data-category="health">
+            Home Caregiving Grants: <a href="https://supportgowhere.life.gov.sg/schemes/HCG/home-caregiving-grant-hcg" class="scheme-link">Grant Website</a>
+        </li>
+
+        <li id="SMEF" data-category="health">
+            Seniors Mobility and Enabling Fund: <a href="https://supportgowhere.life.gov.sg/schemes/SMF/seniors-mobility-enabling-fund" class="scheme-link">Grant Website</a>
+        </li>
+
+        <li id="DAAH" data-category="education">
+            Digital Access @ Home scheme: <a href="https://supportgowhere.life.gov.sg/schemes/DIGITALACCESS-HOME-SCHEME/digitalaccesshome-scheme" class="scheme-link">Grant Website</a>
+        </li>
+
+        <li id="CCinterim"  data-category="employment">
+            COMCARE Interim Scheme <a href="https://supportgowhere.life.gov.sg/schemes/COMCARE-INTERIM-ASSISTANCE/comcare-interim-assistance" class="scheme-link">Grant Website</a>
+        </li>
+          
+        <li id="StudentCare" data-category="education">
+           Student Care Fee Assistance <a href="https://supportgowhere.life.gov.sg/schemes/SCFA/student-care-fee-assistance-scfa" class="scheme-link">Grant Website</a>
+        </li>
+
+        <li id="SSS" data-category="health">
+           Silver Support Scheme <a href="https://supportgowhere.life.gov.sg/schemes/SILVERSUPPORT/silver-support-ss-scheme" class="scheme-link">Grant Website</a>
+        </li>
+
+        <li id="FAS" data-category="education">
+            MOE Financial Assistance Scheme <a href="https://supportgowhere.life.gov.sg/schemes/MOE-FAS/moe-financial-assistance-scheme-moe-fas" class="scheme-link">Grant Website</a>
+        </li>
+
+        <li id="SFAS" data-category="education">
+            SPED Financial Assistance Scheme <a href="https://supportgowhere.life.gov.sg/schemes/SPED-FAS/sped-financial-assistance-scheme-fas" class="scheme-link">Grant Website</a>
+        </li>
+
+        <li id="WISS" data-category="employment">
+            Workfare Income Supplement Scheme <a href="https://supportgowhere.life.gov.sg/schemes/E-WIS/workfare-income-supplement-wis-scheme" class="scheme-link">Grant Website</a>
+        </li>
+
+        <li id="WSSS" data-category="employment">
+            Workfare Skills Support Scheme <a href="https://supportgowhere.life.gov.sg/schemes/WSS/workfare-skills-support-wss-scheme" class="scheme-link">Grant Website</a>
+        </li>
+
+        <li id="ICCCS" data-category="education">
+            Infant Care and Child Care Subsidy <a href="https://supportgowhere.life.gov.sg/schemes/INFANT-CHILD-CARE/infant-care-child-care-subsidies" class="scheme-link">Grant Website</a>
+        </li>
+       
+        <li id="KFAS" data-category="education">
+            Kindergarten Fee Assistance Scheme <a href="https://supportgowhere.life.gov.sg/schemes/KIFAS/kindergarten-fee-assistance-scheme-kifas" class="scheme-link">Grant Website</a>
+        </li>
+
+        <li id="CSL" data-category="health">
+            Careshield Life <a href="https://supportgowhere.life.gov.sg/schemes/CARESHIELD/careshield-life" class="scheme-link">Grant Website</a>
+        </li>
+
+        <li id="CCLTA" data-category="health">
+            Comcare Long-term Assistance <a href="https://supportgowhere.life.gov.sg/schemes/COMCARE-LTA/comcare-long-term-assistance-lta" class="scheme-link">Grant Website</a>
+        </li>        
+
+        <li id="SMTA" data-category="employment">
+            Comcare Short-to-Medium Term Assistance <a href="https://supportgowhere.life.gov.sg/schemes/COMCARE-SMTA/comcare-short-to-medium-term-assistance-smta" class="scheme-link">Grant Website</a>
+        </li>     
+ 
+        <li id="Elderfund" data-category="health">
+            Elderfund <a href="https://supportgowhere.life.gov.sg/schemes/ELDERFUND/elderfund" class="scheme-link">Grant Website</a>
+        </li>        
+
+        <li id="Eldershield" data-category="health">
+            Eldershield <a href="https://supportgowhere.life.gov.sg/schemes/ELDERSHIELD/eldershield" class="scheme-link">Grant Website</a>
+        </li>             
+
+        <li id="IDAS" data-category="health">
+            Interim Disability Assistance Scheme <a href="https://supportgowhere.life.gov.sg/schemes/IDAPE/interim-disability-assistance-scheme-idape" class="scheme-link">Grant Website</a>
+        </li> 
+
+        <li id="Medifund" data-category="health">
+            Medifund <a href="https://supportgowhere.life.gov.sg/schemes/MEDIFUND/medifund" class="scheme-link">Grant Website</a>
+        </li> 
+
+        <li id="MSC" data-category="health">
+            MedisaveCare <a href="https://supportgowhere.life.gov.sg/schemes/MEDISAVE_CARE/medisave-care" class="scheme-link">Grant Website</a>
+        </li> 
+
+        <li id="MDWL" data-category="health">
+            Migrant Domestic Worker Levy Concession <a href="https://supportgowhere.life.gov.sg/schemes/MDW_LEVY_CONCESSION/migrant-domestic-worker-levy-concession" class="scheme-link">Grant Website</a>
+        </li> 
+
+        <li id="PGDAS" data-category="health">
+            Pioneer Generation Disability Assistance Scheme  <a href="https://supportgowhere.life.gov.sg/schemes/PIONEER-DAS/pioneer-generation-disability-assistance-scheme-pioneerdas" class="scheme-link">Grant Website</a>
+        </li>         
+
+        <li id="RLE" data-category="health">
+            Reduced Life Expectancy Scheme  <a href="https://supportgowhere.life.gov.sg/schemes/RLE/reduced-life-expectancy-rle" class="scheme-link">Grant Website</a>
+        </li>        
+
+        <li id="TRCDP" data-category="health">
+            Tax Relief for Caregivers of Disabled Person Scheme  <a href = "https://supportgowhere.life.gov.sg/schemes/TAX_RELIEF_CAREGIVERS_DISABLED/tax-relief-caregivers-disabled-persons-iras" class="scheme-link">Grant Website</a>
+        </li>       
+
+        <li id="TTCDC" data-category="education">
+            Temasek Trust - CDC Lifelong Learning Enabling Fund  <a href = "https://supportgowhere.life.gov.sg/schemes/TT-CDCLLEF/temasek-trust-cdc-lifelong-learning-enabling-fund" class="scheme-link">Grant Website</a>
+        </li>     
+        
+        <li id="ETS" data-category="transport">
+            Enabling Transport Subsidy <a href = "https://supportgowhere.life.gov.sg/schemes/ETS/enabling-transport-subsidy-ets" class="scheme-link">Grant Website</a>
+        </li>     
+
+        <li id="TSS" data-category="transport">
+            Taxi Subsidy Scheme <a href = "https://supportgowhere.life.gov.sg/schemes/TSS/taxi-subsidy-scheme-tss" class="scheme-link">Grant Website</a>
+        </li>    
+
+        
+    </ul>
+
+    <script>
+        function checkQualification() {
+            const age = parseFloat(document.getElementById('age').value);
+            const income = parseFloat(document.getElementById('income').value);
+            const propertyValue = parseFloat(document.getElementById('propertyValue').value);
+            const nationality = document.getElementById('nationality').value;
+            const disabilities = document.getElementById('disabilities').value;
+
+
+            // Sample qualifying criteria for COVID-19 Recovery Grant
+            const qualifyCovid19Grant =
+                age > 21 &&
+                income < 2000 &&
+                propertyValue < 21000 &&
+                (nationality === 'Singaporean' || nationality === 'PR');
+                
+            updateSchemeStatus('covid19Grant', qualifyCovid19Grant);
+
+            // Sample qualifying criteria for Caregivers Training Grant
+            const qualifyCaregiversTrainingGrant =
+                age >= 65 &&
+                (nationality === 'Singaporean' || nationality === 'PR') &&
+                disabilities === 'Yes';
+
+            updateSchemeStatus('caregiversTrainingGrant', qualifyCaregiversTrainingGrant);
+
+            const qualifyCHAS = 
+                age > 21 &&
+                income < 2000 &&
+                propertyValue < 21000 &&
+	            (nationality === 'Singaporean');
+
+	        updateSchemeStatus('CHAS', qualifyCHAS);
+
+
+            const qualifyEAS = 
+	            age > 60 &&
+	            (nationality === 'Singaporean');
+
+	        updateSchemeStatus('EAS', qualifyEAS);
+    
+
+	        const qualifyHCG = 
+	            age > 0 &&
+	            income <2800 &&
+	            propertyValue <13000 &&
+	            nationality === 'Singaporean';
+
+	        updateSchemeStatus('HCG', qualifyHCG);
+
+	        const qualifySMEF = 
+                age > 60 &&
+                income <2000 &&
+                propertyValue <13000 &&
+                nationality === 'Singaporean';
+
+	        updateSchemeStatus('SMEF', qualifySMEF);
+
+
+            const qualifyDAAH = 
+                income <900 &&
+                nationality === 'Singaporean';
+
+            updateSchemeStatus('DAAH', qualifyDAAH);
+
+            const qualifyCCinterim =
+                age > 0 &&
+                income < 800 &&
+                (nationality === 'Singaporean' || nationality === 'PR');
+
+            updateSchemeStatus('CCinterim', qualifyCCinterim);
+
+            const qualifyStudentCare =
+                age > 0 &&
+                income < 1125 &&
+                (nationality === 'Singaporean' || nationality === 'PR');
+
+            updateSchemeStatus('StudentCare', qualifyStudentCare);  
+
+            const qualifySSS =
+                age > 65 &&
+                income < 1800 &&
+                (nationality === 'Singaporean');
+
+            updateSchemeStatus('SSS', qualifySSS);  
+
+            const qualifyFAS =
+                age < 25 &&
+                income < 750 &&
+                (nationality === 'Singaporean');
+
+            updateSchemeStatus('FAS', qualifyFAS);  
+
+            const qualifySFAS =
+                age < 25 &&
+                income < 750 &&
+                (nationality === 'Singaporean');
+
+            updateSchemeStatus('SFAS', qualifySFAS);  
+
+            const qualifyWISS =
+                age > 30 &&
+                income < 2500 &&
+                (nationality === 'Singaporean');
+
+            updateSchemeStatus('WISS', qualifyWISS);  
+
+
+            const qualifyWSSS =
+                age > 35 &&
+                income < 2300 &&
+                (nationality === 'Singaporean');
+
+            updateSchemeStatus('WSSS', qualifyWSSS);  
+
+
+            const qualifyICCCS =
+                (nationality === 'Singaporean');
+
+            updateSchemeStatus('ICCCS', qualifyICCCS);  
+
+            const qualifyKFAS =
+                (nationality === 'Singaporean');
+
+            updateSchemeStatus('KFAS', qualifyKFAS);              
+
+            const qualifyCSL =
+                age <67  &&                
+                (nationality === 'Singaporean' || nationality === 'PR') &&
+                disabilities === 'Yes';
+
+            updateSchemeStatus('CSL', qualifyCSL);              
+
+            const qualifyCCLTA=
+                age > 0  &&        
+                income < 800 &&        
+                (nationality === 'Singaporean' || nationality === 'PR') &&
+                disabilities === 'Yes';
+
+            updateSchemeStatus('CCLTA', qualifyCCLTA);  
+
+            const qualifySMTA=
+                age > 0  &&        
+                income < 800 &&        
+                (nationality === 'Singaporean' || nationality === 'PR');
+
+            updateSchemeStatus('SMTA', qualifySMTA);  
+
+            const qualifyElderfund=
+                age > 30  &&        
+                income < 1200 &&        
+                (nationality === 'Singaporean') &&
+                disabilities === 'Yes';            
+
+            updateSchemeStatus('Elderfund', qualifyElderfund);  
+
+            const qualifyEldershield=
+                age > 40  &&        
+                income > 0 &&        
+                (nationality === 'Singaporean' || nationality === 'PR') &&
+                disabilities === 'Yes';          
+
+            updateSchemeStatus('Eldershield', qualifyEldershield);              
+
+            const qualifyIDAS=
+                age > 60  &&        
+                income > 0 &&        
+                (nationality === 'Singaporean') &&
+                disabilities === 'Yes';           
+
+            updateSchemeStatus('IDAS', qualifyIDAS); 
+
+            const qualifyMediFund=
+                age > 0  &&        
+                income < 3000 &&        
+                (nationality === 'Singaporean') &&
+                disabilities === 'Yes';            
+
+            updateSchemeStatus('Medifund', qualifyMediFund); 
+           
+            const qualifyMSC=
+                age >30  &&        
+                (nationality === 'Singaporean' || nationality === 'PR')&&
+                disabilities === 'Yes';                   
+
+            updateSchemeStatus('MSC', qualifyMSC);
+
+            const qualifyMDWL=
+                age > 0  &&        
+                income < 3000 &&
+                (nationality === 'Singaporean' || nationality === 'PR') &&
+                disabilities === 'Yes';               
+
+            updateSchemeStatus('MDWL', qualifyMDWL);
+
+            const qualifyPGDAS=
+                age > 74  &&        
+                income < 3000 &&
+                (nationality === 'Singaporean' || nationality === 'PR') &&
+                disabilities === 'Yes';                 
+
+            updateSchemeStatus('PGDAS', qualifyPGDAS);
+
+            const qualifyRLE=
+                age > 0  &&        
+                income < 3000 &&
+                (nationality === 'Singaporean' || nationality === 'PR') &&
+                disabilities === 'Yes';                  
+
+            updateSchemeStatus('RLE', qualifyRLE);
+
+            const qualifyTRCDP=
+                age > 0  &&        
+                (nationality === 'Singaporean' || nationality === 'PR'|| nationality == 'Foreigner') &&
+                disabilities === 'Yes';            
+
+            updateSchemeStatus('TRCDP', qualifyTRCDP);
+
+            const qualifyTTCDC=
+                age > 0  &&        
+                (nationality === 'Singaporean' || nationality === 'PR'|| nationality == 'Foreigner') &&
+                disabilities === 'Yes';                  
+
+            updateSchemeStatus('TTCDC', qualifyTTCDC);
+
+            const qualifyETS=
+                age > 0  &&        
+                income <2800 &&
+                (nationality === 'Singaporean' || nationality === 'PR') &&
+                disabilities === 'Yes';            
+
+            updateSchemeStatus('ETS', qualifyETS);
+
+            const qualifyTSS=
+                age > 0  &&        
+                income <2800 &&
+                (nationality === 'Singaporean' || nationality === 'PR') &&
+                disabilities === 'Yes';                  
+
+            updateSchemeStatus('TSS', qualifyTSS);
+
+
+
+        }
+
+        function updateSchemeStatus(schemeId, qualify) {
+        const schemeElement = document.getElementById(schemeId);
+
+        if (qualify) {
+            schemeElement.classList.remove('not-qualify');
+            schemeElement.classList.add('qualify');
+        } else {
+            schemeElement.classList.remove('qualify');
+            schemeElement.classList.add('not-qualify');
+    }
+}
+
+        function filterByCategory() {
+            const selectedCategory = document.getElementById('category').value;
+
+            document.querySelectorAll('#support-schemes li').forEach((scheme) => {
+                const schemeCategory = scheme.dataset.category;
+                const isCategoryMatch = selectedCategory === 'all' || selectedCategory === schemeCategory;
+
+                scheme.style.display = isCategoryMatch ? 'block' : 'none';
+    });
+
+}
+    </script>
+
+</body>
+</html>
